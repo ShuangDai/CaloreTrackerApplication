@@ -34,11 +34,18 @@ public class MainActivity extends AppCompatActivity {
         Button btnSteps = (Button) findViewById(R.id.btnSteps);
         btnSteps.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-               Intent intent = new Intent(MainActivity.this,StepActivity.class);
-               startActivity(intent);
+                Intent intent = new Intent(MainActivity.this,StepActivity.class);
+                startActivity(intent);
             }
         });
 
+        Button home = (Button) findViewById(R.id.btnHome);
+        home.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                startActivity(intent);
+            }
+        });
 
 
         btnSearch.setOnClickListener(new View.OnClickListener() {
