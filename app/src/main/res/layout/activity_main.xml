@@ -5,39 +5,12 @@ android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:orientation="vertical"
 tools:context=".MainActivity">
-<EditText
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:id="@+id/editText"/>
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Search"
-    android:id="@+id/btnSearchInfo"/>
-<Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Search Nutrition"
-        android:id="@+id/btnSearchNutrition"/>
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/tvResult"/>
 
-<ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/imageId"
-        />
 <Button
-        android:id="@+id/btnSteps"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Go to steps activity" />
-    <Button
-        android:id="@+id/btnHome"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Go to Home" />
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:text="Go to home"
+    android:id="@+id/btnHome"/>
+
+
 </LinearLayout>

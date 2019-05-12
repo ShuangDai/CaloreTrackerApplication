@@ -1,39 +1,48 @@
 package com.example.a5046assign2;
 
+import android.app.Fragment;
 import android.arch.persistence.room.Room;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.List;
 
-public class StepActivity extends AppCompatActivity {
+public class StepActivity extends Fragment implements View.OnClickListener {
     LocalDataDatabase db = null;
     EditText editText = null;
     TextView textView_insert = null;
     TextView textView_read = null;
     TextView textView_delete = null;
     TextView textView_update = null;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_step);
+    private View vDisplaySteps;
 
-        editText=(EditText) findViewById(R.id.editText) ;
-        db = Room.databaseBuilder(getApplicationContext(),
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle
+            savedInstanceState) {
+        // Set Variables and listeners
+        vDisplaySteps = inflater.inflate(R.layout.activity_step, container,
+                false);
+        editText=(EditText) vDisplaySteps.findViewById(R.id.editText) ;
+        db = Room.databaseBuilder(getActivity().getApplicationContext(),
                 LocalDataDatabase.class, "LocalDataDatabase")
                 .fallbackToDestructiveMigration()
                 .build();
-        Button addButton = (Button) findViewById(R.id.addButton);
-        textView_insert = (TextView) findViewById(R.id.textView);
-        Button readButton = (Button) findViewById(R.id.readButton);
-        textView_read = (TextView) findViewById(R.id.textView_read);
-        Button deleteButton = (Button) findViewById(R.id.deleteButton);
-        textView_delete = (TextView) findViewById(R.id.textView_delete);
+        Button addButton = (Button) vDisplaySteps.findViewById(R.id.addButton);
+        textView_insert = (TextView) vDisplaySteps.findViewById(R.id.textView);
+        Button readButton = (Button) vDisplaySteps.findViewById(R.id.readButton);
+        textView_read = (TextView) vDisplaySteps.findViewById(R.id.textView_read);
+        Button deleteButton = (Button) vDisplaySteps.findViewById(R.id.deleteButton);
+        textView_delete = (TextView) vDisplaySteps.findViewById(R.id.textView_delete);
         addButton.setOnClickListener(new View.OnClickListener() {
             //including onClick() method
             public void onClick(View v) {
@@ -55,8 +64,18 @@ public class StepActivity extends AppCompatActivity {
                 deleteDatabase.execute();
             }
         });
-
+        return vDisplaySteps;
     }
+    @Override
+    public void onClick(View v) {
+        // Get myUnits file
+//        SharedPreferences spMyUnits =
+//                getActivity().getSharedPreferences("myUnits", Context.MODE_PRIVATE);
+//        String units= spMyUnits.getString("message",null);
+//        tvDisplayUnits.setText(units);
+    }
+
+
     private class InsertDatabase extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
@@ -110,4 +129,5 @@ public class StepActivity extends AppCompatActivity {
             textView_delete.setText("All data was deleted");
         }
     }
+
 }

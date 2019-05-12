@@ -81,11 +81,11 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
         Fragment nextFragment = null;
         switch (id) {
-            case R.id.nav_display_unit:
-                nextFragment = new DisplayUnitFragment();
+            case R.id.nav_display_step:
+                nextFragment = new StepActivity();
                 break;
-            case R.id.nav_enter_unit:
-                nextFragment = new EnterUnitFragment();
+            case R.id.nav_enter_api:
+                nextFragment = new DailyDiet();
                 break;
         }
         FragmentManager fragmentManager = getFragmentManager();

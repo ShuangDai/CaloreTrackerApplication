@@ -2,10 +2,10 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_enter_unit"
-            android:title="Enter Unit" />
+            android:id="@+id/nav_enter_api"
+            android:title="API" />
         <item
-            android:id="@+id/nav_display_unit"
-            android:title="Display Unit" />
+            android:id="@+id/nav_display_step"
+            android:title="Steps" />
     </group>
 </menu>
