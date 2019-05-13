@@ -57,15 +57,6 @@ public class DailyDiet extends Fragment implements View.OnClickListener  {
             }
         });
 
-//        Button findAllCoursesBtn = (Button) findViewById(R.id.btnFindAll);
-//        resultTextView = (TextView) findViewById(R.id.resultTextView);
-//        findAllCoursesBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                CoursesAsyncTask getAllCourses = new CoursesAsyncTask();
-//                getAllCourses.execute();
-//            }
-//        });
 
         return vDisplayAPIResult;
     }
@@ -79,18 +70,6 @@ public class DailyDiet extends Fragment implements View.OnClickListener  {
     }
 
 
-    private class CoursesAsyncTask extends AsyncTask<Void, Void, String>
-    {
-        @Override
-        protected String doInBackground (Void...params){
-            return RestCustomer.findAllCourses();
-        }
-        @Override
-        protected void onPostExecute (String courses){
-            TextView resultTextView = (TextView) vDisplayAPIResult.findViewById(R.id.tvResult);
-            resultTextView.setText(courses);
-        }
-    }
 
     private class SearchFatSecreteAsyncTask extends AsyncTask<String, Void, String> {
         @Override

@@ -10,9 +10,9 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class RestCustomer {
-    private static final String BASE_URL ="http://10.0.0.85:8080/NamedQueryTutorial/webresources/";
+    private static final String BASE_URL ="http://10.0.0.85:8080/CalorieTrackerApplication/webresources/";
     public static String findAllCourses() {
-        final String methodPath = "student.course/";
+        final String methodPath = "calorie_tracker.userinfo/";
         URL url = null;
         HttpURLConnection conn = null;
         String textResult = "";
@@ -34,6 +34,31 @@ public class RestCustomer {
             conn.disconnect();
         }
         return textResult;
+    }
+    public static void createUser(UserInfo userInfo){
+        URL url = null;
+        HttpURLConnection conn = null;
+        final String methodPath="calorie_tracker.userinfo/";
+        try {
+            Gson gson =new Gson();
+            String stringCourseJson=gson.toJson(userInfo);
+            url = new URL(BASE_URL + methodPath);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setFixedLengthStreamingMode(stringCourseJson.getBytes().length);
+            conn.setRequestProperty("Content-Type", "application/json");
+            PrintWriter out= new PrintWriter(conn.getOutputStream());
+            out.print(stringCourseJson);
+            out.close();
+            Log.i("error",new Integer(conn.getResponseCode()).toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conn.disconnect();
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.a5046assign2;
 
+import android.os.AsyncTask;
 import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -65,8 +66,6 @@ public class SignUp extends AppCompatActivity {
         userNameEditText = (EditText) findViewById(R.id.userNameEditText);
         passwordEditText=(EditText) findViewById(R.id.passwordEditText);
 
-
-
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +87,10 @@ public class SignUp extends AppCompatActivity {
                 Toast.makeText(SignUp.this,
                        levelOfActivity+dateOfBirth+gender+userName+password,
                         Toast.LENGTH_SHORT).show();
+
+                PostAsyncTask postAsyncTask=new PostAsyncTask();
+                postAsyncTask.execute("12",firstName,surName,email,dateOfBirth,String.valueOf(height),String.valueOf(weight),gender,address,postcode,String.valueOf(levelOfActivity));
+
             }
         });
     }
@@ -95,5 +98,25 @@ public class SignUp extends AppCompatActivity {
         DialogFragment newFragment = new MyDatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "date picker");
     }
+
+    private class PostAsyncTask extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground(String... params) {
+            UserInfo userInfo=new UserInfo(params[0],params[1],params[2],params[3],params[4], Integer.valueOf(params[5]),Integer.valueOf(params[6]),params[7],params[8],params[9],Integer.valueOf(params[10]));
+            RestCustomer.createUser(userInfo);
+            return "Created account successfully!";
+        }
+        @Override
+        protected void onPostExecute(String response) {
+            Toast.makeText(SignUp.this,
+                    response,
+                    Toast.LENGTH_SHORT).show();
+
+
+        }
+    }
+
+
 
 }
