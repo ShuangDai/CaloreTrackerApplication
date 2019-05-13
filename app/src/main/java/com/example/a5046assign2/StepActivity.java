@@ -4,6 +4,8 @@ import android.app.Fragment;
 import android.arch.persistence.room.Room;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -80,23 +83,64 @@ public class StepActivity extends Fragment implements View.OnClickListener {
         @Override
         protected String doInBackground(Void... params) {
             if (!(editText.getText().toString().isEmpty())){
-                String[] details = editText.getText().toString().split(" ");
-                if (details.length==1) {
-                    LocalData localData = new LocalData(Integer.parseInt(details[0]));
-                    long id = db.localDataDao().insert(localData);
-                    return (id + " " + details[0]);
+                try {
+                    String[] details = editText.getText().toString().split(" ");
+                    if (details.length==1) {
+                        if(Integer.parseInt(details[0])>=0){
+                            LocalData localData = new LocalData(Integer.parseInt(details[0]));
+                            long id = db.localDataDao().insert(localData);
+                            return (id + " " + details[0]);
+                        }
+                        else{
+                            return "NagativeValue";
+                        }
+
+                    }
+                    else
+                        return "spaceError";
+
                 }
-                else
-                    return "";
+                catch (NumberFormatException e){
+                    return "NumberFormatError";
+                }
+
             }
             else
-                return "";
+                return "NullValue";
         }
         @Override
         protected void onPostExecute(String details) {
-            textView_insert.setText("Added Record: " + details);
+
+            if(details.equals("spaceError")){
+                textView_insert.setText("Please do not include space");
+                textView_insert.setTextColor(Color.rgb(200,0,0));
+
+            }
+            else if(details.equals("NumberFormatError")){
+                textView_insert.setText("Please input valid number");
+                textView_insert.setTextColor(Color.rgb(200,0,0));
+            }
+            else if(details.equals("NullValue")){
+                textView_insert.setText("Steps number is required");
+                textView_insert.setTextColor(Color.rgb(200,0,0));
+
+            }
+            else if(details.equals("NagativeValue")){
+                textView_insert.setText("Steps should be positive");
+                textView_insert.setTextColor(Color.rgb(200,0,0));
+
+            }
+            else{
+                textView_insert.setTextColor(Color.rgb(0,0,0));
+                textView_insert.setText("Added Record: " + details);
+
+            }
+
+
         }
     }
+
+
     private class ReadDatabase extends AsyncTask<Void, Void, String> {
         @Override
         protected String doInBackground(Void... params) {
@@ -115,6 +159,7 @@ public class StepActivity extends Fragment implements View.OnClickListener {
         }
         @Override
         protected void onPostExecute(String details) {
+            textView_read.setTextColor(Color.rgb(0,0,0));
             textView_read.setText("All data: " + details);
         }
     }
@@ -126,6 +171,7 @@ public class StepActivity extends Fragment implements View.OnClickListener {
             return null;
         }
         protected void onPostExecute(Void param) {
+            textView_delete.setTextColor(Color.rgb(0,0,0));
             textView_delete.setText("All data was deleted");
         }
     }

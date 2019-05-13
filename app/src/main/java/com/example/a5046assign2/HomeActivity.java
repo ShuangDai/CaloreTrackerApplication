@@ -87,6 +87,16 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_enter_api:
                 nextFragment = new DailyDiet();
                 break;
+            case R.id.nav_calorie_tracker:
+                nextFragment = new CalorieTracker();
+                break;
+            case R.id.nav_report:
+                nextFragment = new Report();
+                break;
+            case R.id.nav_map:
+                nextFragment = new LocationActivity();
+                break;
+
         }
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame,
