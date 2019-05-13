@@ -37,6 +37,25 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:id="@+id/userNameEditText"
+            android:hint="User Name"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/passwordEditText"
+            android:hint="Password"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="10dp"
+            />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:id="@+id/heightEditText"
             android:hint="Height"
             android:layout_marginLeft="20dp"
@@ -86,6 +105,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="10dp"
+
             />
         <Button
             android:id="@+id/button"
@@ -104,6 +124,7 @@
             android:id="@+id/dateTextView"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+
             />
         <TextView
             android:layout_width="match_parent"
@@ -111,6 +132,7 @@
             android:text="Gender"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
+
             />
         <RadioGroup
             android:id="@+id/radioSex"
