@@ -6,11 +6,23 @@ android:layout_height="match_parent"
 android:orientation="vertical"
 tools:context=".MainActivity">
 
-<Button
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="Go to home"
-    android:id="@+id/btnHome"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Go to home"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:id="@+id/btnHome"
+        />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Log In"
+        android:id="@+id/btnLogIn"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign up"
+        android:id="@+id/btnSignUp"/>
 
 </LinearLayout>
