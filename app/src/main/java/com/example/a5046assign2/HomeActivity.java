@@ -14,17 +14,19 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.widget.TextView;
 
-public class HomeActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -81,6 +83,9 @@ public class HomeActivity extends AppCompatActivity
         int id = item.getItemId();
         Fragment nextFragment = null;
         switch (id) {
+            case R.id.nav_home:
+                nextFragment = new HomeFragment();
+                break;
             case R.id.nav_display_step:
                 nextFragment = new StepActivity();
                 break;
@@ -96,7 +101,6 @@ public class HomeActivity extends AppCompatActivity
             case R.id.nav_map:
                 nextFragment = new LocationActivity();
                 break;
-
         }
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame,
