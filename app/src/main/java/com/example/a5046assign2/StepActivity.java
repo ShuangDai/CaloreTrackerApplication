@@ -26,6 +26,7 @@ public class StepActivity extends Fragment implements View.OnClickListener {
     TextView textView_read = null;
     TextView textView_delete = null;
     TextView textView_update = null;
+    TextView textView_total_staps=null;
     private View vDisplaySteps;
 
 
@@ -46,11 +47,19 @@ public class StepActivity extends Fragment implements View.OnClickListener {
         textView_read = (TextView) vDisplaySteps.findViewById(R.id.textView_read);
         Button deleteButton = (Button) vDisplaySteps.findViewById(R.id.deleteButton);
         textView_delete = (TextView) vDisplaySteps.findViewById(R.id.textView_delete);
+        Button updateButton = (Button) vDisplaySteps.findViewById(R.id.updateButton);
+        textView_update = (TextView) vDisplaySteps.findViewById(R.id.textView_update);
+        textView_total_staps = (TextView) vDisplaySteps.findViewById(R.id.textView_total_steps);
+        StepActivity.CalculateTotalSteps calculateTotalSteps = new StepActivity.CalculateTotalSteps();
+        calculateTotalSteps.execute();
+
         addButton.setOnClickListener(new View.OnClickListener() {
             //including onClick() method
             public void onClick(View v) {
                 StepActivity.InsertDatabase addDatabase = new StepActivity.InsertDatabase();
                 addDatabase.execute();
+                StepActivity.CalculateTotalSteps calculateTotalSteps = new StepActivity.CalculateTotalSteps();
+                calculateTotalSteps.execute();
             }
         });
         readButton.setOnClickListener(new View.OnClickListener() {
@@ -65,6 +74,17 @@ public class StepActivity extends Fragment implements View.OnClickListener {
             public void onClick(View v) {
                 DeleteDatabase deleteDatabase = new DeleteDatabase();
                 deleteDatabase.execute();
+                StepActivity.CalculateTotalSteps calculateTotalSteps = new StepActivity.CalculateTotalSteps();
+                calculateTotalSteps.execute();
+            }
+        });
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            //including onClick() method
+            public void onClick(View v) {
+                UpdateDatabase updateDatabase = new UpdateDatabase();
+                updateDatabase.execute();
+                StepActivity.CalculateTotalSteps calculateTotalSteps = new StepActivity.CalculateTotalSteps();
+                calculateTotalSteps.execute();
             }
         });
         return vDisplaySteps;
@@ -140,6 +160,28 @@ public class StepActivity extends Fragment implements View.OnClickListener {
         }
     }
 
+    private class CalculateTotalSteps extends AsyncTask<Void, Void, Integer> {
+        @Override
+        protected Integer doInBackground(Void... params) {
+            List<LocalData> localDatas = db.localDataDao().getAll();
+            if (!(localDatas.isEmpty() || localDatas == null) ){
+                int sum= 0;
+                for (LocalData temp : localDatas) {
+                    int currentNum = temp.getSteps();
+                    sum = sum + currentNum;
+                }
+                return sum;
+            }
+            else
+                return 0;
+        }
+        @Override
+        protected void onPostExecute(Integer details) {
+            textView_total_staps.setTextColor(Color.rgb(0,0,0));
+            textView_total_staps.setText("Total steps: " + details);
+
+        }
+    }
 
     private class ReadDatabase extends AsyncTask<Void, Void, String> {
         @Override
@@ -161,6 +203,7 @@ public class StepActivity extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String details) {
             textView_read.setTextColor(Color.rgb(0,0,0));
             textView_read.setText("All data: " + details);
+
         }
     }
 
@@ -173,6 +216,27 @@ public class StepActivity extends Fragment implements View.OnClickListener {
         protected void onPostExecute(Void param) {
             textView_delete.setTextColor(Color.rgb(0,0,0));
             textView_delete.setText("All data was deleted");
+        }
+    }
+
+    private class UpdateDatabase extends AsyncTask<Void, Void, String> {
+        @Override protected String doInBackground(Void... params) {
+            LocalData localData=null;
+            String[] details= editText.getText().toString().split(" ");
+            if (details.length==2) {
+                int id = Integer.parseInt(details[0]);
+                localData = db.localDataDao().findByID(id);
+                localData.setSteps(Integer.parseInt(details[1]));
+            }
+            if (localData!=null) {
+                db.localDataDao().updateUsers(localData);
+                return (details[0] + " " + details[1]);
+            }
+            return "";
+        }
+        @Override
+        protected void onPostExecute(String details) {
+            textView_update.setText("Updated details: "+ details);
         }
     }
 
