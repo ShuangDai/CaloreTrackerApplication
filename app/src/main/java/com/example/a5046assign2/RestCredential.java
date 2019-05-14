@@ -9,10 +9,11 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class RestCustomer {
+public class RestCredential {
     private static final String BASE_URL ="http://10.0.0.85:8080/CalorieTrackerApplication/webresources/";
-    public static String findAllCourses() {
-        final String methodPath = "calorie_tracker.userinfo/";
+
+    public static String findByUserName(String username) {
+        final String methodPath = "calorie_tracker.credential/findByUserName/"+username;
         URL url = null;
         HttpURLConnection conn = null;
         String textResult = "";
@@ -37,14 +38,13 @@ public class RestCustomer {
     }
 
 
-
-    public static void createUser(UserInfo userInfo){
+    public static void createCredential(Credential credential){
         URL url = null;
         HttpURLConnection conn = null;
-        final String methodPath="calorie_tracker.userinfo/";
+        final String methodPath="calorie_tracker.credential/";
         try {
             Gson gson =new Gson();
-            String stringCourseJson=gson.toJson(userInfo);
+            String stringCourseJson=gson.toJson(credential);
             url = new URL(BASE_URL + methodPath);
             conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000);
