@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import android.util.Log;
-import android.view.View;
 import android.support.v4.view.GravityCompat;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.view.MenuItem;
@@ -16,12 +15,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private String firstName;
@@ -113,7 +107,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 nextFragment = new CalorieTracker();
                 break;
             case R.id.nav_report:
-                nextFragment = new Report();
+                nextFragment = new ReportActivity();
                 break;
             case R.id.nav_map:
                 nextFragment = new LocationActivity();

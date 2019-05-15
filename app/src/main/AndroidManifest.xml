@@ -35,7 +35,7 @@
             android:label="@string/title_activity_maps" />
         <activity android:name=".CalorieTracker" />
         <activity android:name=".MainFragment" />
-        <activity android:name=".Report"/>
+        <activity android:name=".ReportActivity"/>
         <activity android:name=".SignUp" />
         <activity android:name=".LogIn" />
         <activity android:name=".DailyDiet" />
