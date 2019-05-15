@@ -1,5 +1,6 @@
 package com.example.a5046assign2;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,9 @@ public class CategoryListView extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
 
+                Intent intent = new Intent(CategoryListView.this,FoodListActivity.class);
+                intent.putExtra("category",listItemsValue[position]);
+                startActivity(intent);
                 Toast.makeText(CategoryListView.this, listItemsValue[position], Toast.LENGTH_SHORT).show();
             }
         });

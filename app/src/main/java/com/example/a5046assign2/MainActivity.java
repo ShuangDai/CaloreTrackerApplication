@@ -15,7 +15,7 @@ public class MainActivity extends AppCompatActivity {
         Button home = (Button) findViewById(R.id.btnHome);
         home.setOnClickListener(new View.OnClickListener() {
         public void onClick(View v) {
-            Intent intent = new Intent(MainActivity.this, FoodListActivity.class);
+            Intent intent = new Intent(MainActivity.this, CategoryListView.class);
             startActivity(intent);
             }
         });
