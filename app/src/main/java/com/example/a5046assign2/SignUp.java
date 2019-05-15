@@ -14,10 +14,14 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 //References:https://www.viralandroid.com/2016/01/simple-android-user-contact-form-xml-ui-design.html
 
 public class SignUp extends AppCompatActivity {
@@ -118,12 +122,20 @@ public class SignUp extends AppCompatActivity {
         protected String doInBackground(String... params) {
             UserInfo userInfo = new UserInfo(params[0], params[1], params[2], params[3], params[4], Integer.valueOf(params[5]), Integer.valueOf(params[6]), params[7], params[8], params[9], Integer.valueOf(params[10]));
             RestCustomer.createUser(userInfo);
-
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String originalPassword=params[12];
+            MessageDigest digest = null;
+            String hashValue="";
+            try {
+                digest = MessageDigest.getInstance("SHA-256");
+                byte[] hash = digest.digest(originalPassword.getBytes(StandardCharsets.UTF_8));
+                hashValue=bytesToHex(hash);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
             Date date = new Date();
-            String s = dateFormat.format(date);
-            Log.i("mytag",s);
-            Credential credential = new Credential(params[0], params[11], params[12],s,userInfo);
+            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            String newDate = formatter.format(date);
+            Credential credential = new Credential(params[0], params[11], hashValue,newDate,userInfo);
             RestCredential.createCredential(credential);
             Log.i("mytag",credential.toString());
             return "Create account successfully";
@@ -137,6 +149,15 @@ public class SignUp extends AppCompatActivity {
 
         }
 
+    }
+    private static String bytesToHex(byte[] hash) {
+        StringBuffer hexString = new StringBuffer();
+        for (int i = 0; i < hash.length; i++) {
+            String hex = Integer.toHexString(0xff & hash[i]);
+            if(hex.length() == 1) hexString.append('0');
+            hexString.append(hex);
+        }
+        return hexString.toString();
     }
 
 

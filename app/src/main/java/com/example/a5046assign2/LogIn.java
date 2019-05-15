@@ -99,6 +99,12 @@ public class LogIn extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
                 }
             }
+            else{
+                Toast.makeText(LogIn.this,
+                        "The user name or password is not correct!",
+                        Toast.LENGTH_SHORT).show();
+
+            }
 
         }
 

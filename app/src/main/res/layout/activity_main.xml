@@ -9,7 +9,7 @@ tools:context=".MainActivity">
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Go to home"
+        android:text="Go to List"
         android:layout_marginTop="?attr/actionBarSize"
         android:id="@+id/btnHome"
         />
