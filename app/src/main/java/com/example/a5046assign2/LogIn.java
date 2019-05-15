@@ -1,5 +1,6 @@
 package com.example.a5046assign2;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -75,7 +76,6 @@ public class LogIn extends AppCompatActivity {
                 Gson g = new Gson();
                 Credential u = g.fromJson(user, Credential.class);
 
-                Log.i("myTag",u.toString());
                 String correctPassword = u.getPassword();
                 MessageDigest digest = null;
                 try {
@@ -85,9 +85,11 @@ public class LogIn extends AppCompatActivity {
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
-                Log.i("myTag",correctPassword);
-                Log.i("myTag",hashValue);
                 if (hashValue.equals(correctPassword)) {
+                    Intent intent = new Intent(LogIn.this,HomeActivity.class);
+                    intent.putExtra("userFirstName",u.getUserInfo().getFirstName());
+                    startActivity(intent);
+
                     Toast.makeText(LogIn.this,
                             "Log in successfully",
                             Toast.LENGTH_SHORT).show();
