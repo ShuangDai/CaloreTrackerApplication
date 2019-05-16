@@ -78,7 +78,7 @@ public class FoodListActivity extends AppCompatActivity {
     {
         @Override
         protected String doInBackground (String...params){
-            return RestFood.findFoodByUserCategory(params[0]);
+            return RestFood.findFoodByCategory(params[0]);
         }
         @Override
         protected void onPostExecute (String food){

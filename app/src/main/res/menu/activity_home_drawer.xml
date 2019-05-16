@@ -5,6 +5,9 @@
             android:id="@+id/nav_home"
             android:title="Home"/>
         <item
+            android:id="@+id/nav_diet"
+            android:title="My Daily Diet"/>
+        <item
             android:id="@+id/nav_enter_api"
             android:title="API" />
         <item

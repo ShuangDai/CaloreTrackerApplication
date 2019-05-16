@@ -100,6 +100,9 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_display_step:
                 nextFragment = new StepActivity();
                 break;
+            case R.id.nav_diet:
+                nextFragment = new CategoryListView();
+                break;
             case R.id.nav_enter_api:
                 nextFragment = new DailyDiet();
                 break;

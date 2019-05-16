@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class RestCustomer {
-    private static final String BASE_URL ="http://10.0.0.85:8080/CalorieTrackerApplication/webresources/";
+    private static final String BASE_URL ="http://10.0.0.86:8080/CalorieTrackerApplication/webresources/";
     public static String findAllCourses() {
         final String methodPath = "calorie_tracker.userinfo/";
         URL url = null;

@@ -10,9 +10,9 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class RestFood {
-    private static final String BASE_URL ="http://10.0.0.85:8080/CalorieTrackerApplication/webresources/";
+    private static final String BASE_URL ="http://10.0.0.86:8080/CalorieTrackerApplication/webresources/";
 
-    public static String findFoodByUserCategory(String category) {
+    public static String findFoodByCategory(String category) {
         final String methodPath = "calorie_tracker.food/findByCategory/"+category;
         URL url = null;
         HttpURLConnection conn = null;

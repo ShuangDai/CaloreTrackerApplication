@@ -10,7 +10,7 @@ import java.net.URL;
 import java.util.Scanner;
 
 public class RestCredential {
-    private static final String BASE_URL ="http://10.0.0.85:8080/CalorieTrackerApplication/webresources/";
+    private static final String BASE_URL ="http://10.0.0.86:8080/CalorieTrackerApplication/webresources/";
 
     public static String findByUserName(String username) {
         final String methodPath = "calorie_tracker.credential/findByUserName/"+username;
