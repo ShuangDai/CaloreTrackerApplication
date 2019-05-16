@@ -1,6 +1,8 @@
 package com.example.a5046assign2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -86,9 +88,17 @@ public class LogIn extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 if (hashValue.equals(correctPassword)) {
+
+                    SharedPreferences sharedPreferences;
+
+                    sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("userId",u.getUserInfo().getUserId());
+                    editor.apply();
                     Intent intent = new Intent(LogIn.this,HomeActivity.class);
                     intent.putExtra("userFirstName",u.getUserInfo().getFirstName());
                     startActivity(intent);
+
 
                     Toast.makeText(LogIn.this,
                             "Log in successfully",

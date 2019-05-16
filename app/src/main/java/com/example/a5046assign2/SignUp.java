@@ -98,14 +98,14 @@ public class SignUp extends AppCompatActivity {
                         Toast.LENGTH_SHORT).show();
                 String id = generateId(dateOfBirth);
                 PostAsyncTask postAsyncTask = new PostAsyncTask();
-                postAsyncTask.execute(id, firstName, surName, email, dateOfBirth, String.valueOf(height), String.valueOf(weight), gender, address, postcode, String.valueOf(levelOfActivity), userName, password);
+                postAsyncTask.execute(id, firstName, surName, email, dateOfBirth, String.valueOf(height), String.valueOf(weight), gender, address, postcode, String.valueOf(levelOfActivity), userName, password,String.valueOf(stepsPerMile));
 
             }
         });
     }
 
     public String generateId(String dob) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date date = new Date();
         String s = dateFormat.format(date) + dob;
         String strippedInput = s.replaceAll("\\W", "");
@@ -120,7 +120,7 @@ public class SignUp extends AppCompatActivity {
     private class PostAsyncTask extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            UserInfo userInfo = new UserInfo(params[0], params[1], params[2], params[3], params[4], Integer.valueOf(params[5]), Integer.valueOf(params[6]), params[7], params[8], params[9], Integer.valueOf(params[10]));
+            UserInfo userInfo = new UserInfo(params[0], params[1], params[2], params[3], params[4], Integer.valueOf(params[5]), Integer.valueOf(params[6]), params[7], params[8], params[9], Integer.valueOf(params[10]),Integer.valueOf(params[13]));
             RestCustomer.createUser(userInfo);
             String originalPassword=params[12];
             MessageDigest digest = null;
@@ -133,7 +133,7 @@ public class SignUp extends AppCompatActivity {
                 e.printStackTrace();
             }
             Date date = new Date();
-            SimpleDateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
             String newDate = formatter.format(date);
             Credential credential = new Credential(params[0], params[11], hashValue,newDate,userInfo);
             RestCredential.createCredential(credential);

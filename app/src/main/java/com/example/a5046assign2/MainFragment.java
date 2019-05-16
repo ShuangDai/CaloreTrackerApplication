@@ -1,7 +1,9 @@
 package com.example.a5046assign2;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import android.view.LayoutInflater;
@@ -44,6 +46,12 @@ public class MainFragment extends Fragment {
             public void onClick(View v) {
                 String goal = goalEditText.getText().toString();
                 displayGoalTextView.setText("Your daily goal is "+goal+" cal");
+                SharedPreferences sharedPreferences;
+
+                sharedPreferences = getActivity().getSharedPreferences("info", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("goal",goal);
+                editor.apply();
             }
         });
 

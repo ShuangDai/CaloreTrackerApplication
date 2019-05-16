@@ -12,8 +12,9 @@ public class UserInfo {
     private String address;
     private String postcode;
     private int levelOfActivity;
+    private int stepsPerMile;
 
-    public UserInfo(String userId, String firstName, String surname, String email, String dob, int height, int wight, String gender, String address, String postcode, int levelOfActivity) {
+    public UserInfo(String userId, String firstName, String surname, String email, String dob, int height, int wight, String gender, String address, String postcode, int levelOfActivity, int stepsPerMile) {
         this.userId = userId;
         this.firstName = firstName;
         this.surname = surname;
@@ -25,6 +26,15 @@ public class UserInfo {
         this.address = address;
         this.postcode = postcode;
         this.levelOfActivity = levelOfActivity;
+        this.stepsPerMile=stepsPerMile;
+    }
+
+    public int getStepsPerMile() {
+        return stepsPerMile;
+    }
+
+    public void setStepsPerMile(int stepsPerMile) {
+        this.stepsPerMile = stepsPerMile;
     }
 
     public String getUserId() {

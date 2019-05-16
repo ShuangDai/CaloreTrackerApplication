@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 public class RestCustomer {
     private static final String BASE_URL ="http://10.0.0.86:8080/CalorieTrackerApplication/webresources/";
-    public static String findAllCourses() {
+    public static String findAllCustomers() {
         final String methodPath = "calorie_tracker.userinfo/";
         URL url = null;
         HttpURLConnection conn = null;
@@ -62,6 +62,31 @@ public class RestCustomer {
         } finally {
             conn.disconnect();
         }
+    }
+
+    public static String calculatesTheCaloriesBurnedPerStep(String userId) {
+        final String methodPath = "calorie_tracker.userinfo/calculatesTotalCaloriesBurned/"+userId;
+        URL url = null;
+        HttpURLConnection conn = null;
+        String textResult = "";
+        try {
+            url = new URL(BASE_URL + methodPath);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept", "application/json");
+            Scanner inStream = new Scanner(conn.getInputStream());
+            while (inStream.hasNextLine()) {
+                textResult += inStream.nextLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conn.disconnect();
+        }
+        return textResult;
     }
 
 }

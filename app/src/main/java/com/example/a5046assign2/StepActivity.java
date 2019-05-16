@@ -180,6 +180,14 @@ public class StepActivity extends Fragment implements View.OnClickListener {
             textView_total_staps.setTextColor(Color.rgb(0,0,0));
             textView_total_staps.setText("Total steps: " + details);
 
+            SharedPreferences sharedPreferences;
+            sharedPreferences = getActivity().getSharedPreferences("info",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString("steps",details.toString());
+            editor.apply();
+
+
+
         }
     }
 
@@ -203,6 +211,10 @@ public class StepActivity extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String details) {
             textView_read.setTextColor(Color.rgb(0,0,0));
             textView_read.setText("All data: " + details);
+
+
+
+
 
         }
     }
