@@ -1,16 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".ReportActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ReportActivity">
+    <Button
+        android:id="@+id/setDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Pick Date"
+        android:layout_marginTop="40dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/dateTextView"
+        />
 
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/tvResult"
-    android:layout_marginTop="?attr/actionBarSize"
-    android:text="this is report view"/>
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/piechart"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <com.github.mikephil.charting.charts.BarChart
+        android:layout_marginTop="50dp"
+        android:id="@+id/barchart"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"/>
+
 
 </LinearLayout>

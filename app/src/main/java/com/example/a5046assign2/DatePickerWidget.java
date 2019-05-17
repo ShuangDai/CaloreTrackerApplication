@@ -19,8 +19,8 @@ public class DatePickerWidget extends AppCompatActivity {
                 @Override
                 public void onDateChanged(DatePicker datePicker, int i, int i1, int i2) {
                     Toast.makeText(DatePickerWidget.this, "picked date is " + datePicker.getDayOfMonth() +
-                            " / " + (datePicker.getMonth()+1) +
-                            " / " + datePicker.getYear(), Toast.LENGTH_SHORT).show();
+                            "-" + (datePicker.getMonth()+1) +
+                            "-" + datePicker.getYear(), Toast.LENGTH_SHORT).show();
                 }
             };
 }

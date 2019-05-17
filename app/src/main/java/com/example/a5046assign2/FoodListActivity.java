@@ -83,7 +83,6 @@ public class FoodListActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute (String food){
 
-
             foodList.setAdapter(myListAdapter);
             try {
                 JSONArray jsonArray= new JSONArray(food);

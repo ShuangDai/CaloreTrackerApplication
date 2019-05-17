@@ -1,7 +1,8 @@
 package com.example.a5046assign2;
 
+import android.app.DialogFragment;
 import android.os.AsyncTask;
-import android.support.v4.app.DialogFragment;
+
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -114,7 +115,7 @@ public class SignUp extends AppCompatActivity {
 
     public void showDatePicker(View v) {
         DialogFragment newFragment = new MyDatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "date picker");
+        newFragment.show(getFragmentManager(), "date picker");
     }
 
     private class PostAsyncTask extends AsyncTask<String, Void, String> {

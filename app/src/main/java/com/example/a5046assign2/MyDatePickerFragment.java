@@ -2,8 +2,9 @@ package com.example.a5046assign2;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.DialogFragment;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
+
 import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,9 +30,18 @@ public class MyDatePickerFragment extends DialogFragment {
             new DatePickerDialog.OnDateSetListener() {
                 public void onDateSet(DatePicker view, int year, int month, int day) {
                     Toast.makeText(getActivity(), "selected date is " + view.getYear() +
-                            " / " + (view.getMonth()+1) +
-                            " / " + view.getDayOfMonth(), Toast.LENGTH_SHORT).show();
-                    dateTextview.setText(view.getYear() + " / " + (view.getMonth()+1) + " / " + view.getDayOfMonth());
+                            "-" + (view.getMonth()+1) +
+                            "-" + view.getDayOfMonth(), Toast.LENGTH_SHORT).show();
+
+                    int m =view.getMonth()+1;
+                    String edited_month;
+                    if(m<10){
+                        edited_month="0"+String.valueOf(view.getMonth()+1);
+                    }
+                    else{
+                        edited_month=String.valueOf(view.getMonth()+1);
+                    }
+                    dateTextview.setText(view.getYear() + "-" + edited_month + "-" + view.getDayOfMonth());
                 }
             };
 }
