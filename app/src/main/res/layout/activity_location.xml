@@ -8,12 +8,13 @@ tools:context=".LocationActivity">
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Address:"/>
+        android:layout_marginTop="?attr/actionBarSize"
+        android:text="Please enter your home address to find nearby parks"/>
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/editTextAddress"
-        android:layout_marginTop="?attr/actionBarSize"/>
+      />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
