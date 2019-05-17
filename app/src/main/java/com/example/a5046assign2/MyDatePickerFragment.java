@@ -15,9 +15,12 @@ import java.util.Calendar;
 
 public class MyDatePickerFragment extends DialogFragment {
     TextView dateTextview;
+
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         dateTextview = (TextView) getActivity().findViewById(R.id.dateTextView);
+
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
         int month = c.get(Calendar.MONTH);

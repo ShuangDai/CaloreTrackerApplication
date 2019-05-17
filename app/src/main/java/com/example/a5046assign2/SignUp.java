@@ -116,6 +116,7 @@ public class SignUp extends AppCompatActivity {
     public void showDatePicker(View v) {
         DialogFragment newFragment = new MyDatePickerFragment();
         newFragment.show(getFragmentManager(), "date picker");
+
     }
 
     private class PostAsyncTask extends AsyncTask<String, Void, String> {

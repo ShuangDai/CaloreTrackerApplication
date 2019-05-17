@@ -3,31 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".ReportActivity">
     <Button
-        android:id="@+id/setDate"
+        android:id="@+id/dailyReportBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pick Date"
-        android:layout_marginTop="40dp"
-        />
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:text="Generate daily report"
         android:layout_marginLeft="10dp"
-        android:id="@+id/dateTextView"
+        android:layout_marginTop="200dp"
+
         />
 
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/piechart"
-        android:layout_width="match_parent"
-        android:layout_height="200dp" />
 
-    <com.github.mikephil.charting.charts.BarChart
-        android:layout_marginTop="50dp"
-        android:id="@+id/barchart"
-        android:layout_width="match_parent"
-        android:layout_height="300dp"/>
+    <Button
+        android:id="@+id/periodReportBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate period report"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        />
 
 
 </LinearLayout>

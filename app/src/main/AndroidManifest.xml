@@ -16,7 +16,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".FoodListActivity"></activity>
+        <activity android:name=".BarchartActivity"></activity>
+        <activity android:name=".PiechartActivity" />
+        <activity android:name=".FoodListActivity" />
         <activity android:name=".CategoryListView" />
         <activity android:name=".DatePickerWidget" />
         <activity android:name=".LocationActivity" />
