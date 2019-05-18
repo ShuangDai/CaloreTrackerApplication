@@ -4,20 +4,21 @@ import java.util.Date;
 
 public class Report {
     private String reportId;
-    private Date reportDate;
+    private String reportDate;
     private int totalCaloriesConsumed;
     private int totalCaloriesBurned;
     private int toralStepsTaken;
     private int goal;
     private UserInfo userId;
 
-    public Report(String reportId, Date reportDate, int totalCaloriesConsumed, int totalCaloriesBurned, int toralStepsTaken, int goal) {
+    public Report(String reportId, String reportDate, int totalCaloriesConsumed, int totalCaloriesBurned, int toralStepsTaken, int goal,UserInfo userId) {
         this.reportId = reportId;
         this.reportDate = reportDate;
         this.totalCaloriesConsumed = totalCaloriesConsumed;
         this.totalCaloriesBurned = totalCaloriesBurned;
         this.toralStepsTaken = toralStepsTaken;
         this.goal = goal;
+        this.userId=userId;
     }
 
     public String getReportId() {
@@ -28,11 +29,11 @@ public class Report {
         this.reportId = reportId;
     }
 
-    public Date getReportDate() {
+    public String getReportDate() {
         return reportDate;
     }
 
-    public void setReportDate(Date reportDate) {
+    public void setReportDate(String reportDate) {
         this.reportDate = reportDate;
     }
 
@@ -76,11 +77,13 @@ public class Report {
         this.userId = userId;
     }
 
+
+
     @Override
     public String toString() {
         return "Report{" +
                 "reportId='" + reportId + '\'' +
-                ", reportDate=" + reportDate +
+                ", reportDate='" + reportDate + '\'' +
                 ", totalCaloriesConsumed=" + totalCaloriesConsumed +
                 ", totalCaloriesBurned=" + totalCaloriesBurned +
                 ", toralStepsTaken=" + toralStepsTaken +

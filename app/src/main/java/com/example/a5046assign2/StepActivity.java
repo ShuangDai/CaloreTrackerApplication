@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 public class StepActivity extends Fragment implements View.OnClickListener {
@@ -28,6 +34,7 @@ public class StepActivity extends Fragment implements View.OnClickListener {
     TextView textView_update = null;
     TextView textView_total_staps=null;
     private View vDisplaySteps;
+
 
 
     @Override
@@ -69,6 +76,8 @@ public class StepActivity extends Fragment implements View.OnClickListener {
                 readDatabase.execute();
             }
         });
+
+
         deleteButton.setOnClickListener(new View.OnClickListener() {
             //including onClick() method
             public void onClick(View v) {
@@ -76,6 +85,13 @@ public class StepActivity extends Fragment implements View.OnClickListener {
                 deleteDatabase.execute();
                 StepActivity.CalculateTotalSteps calculateTotalSteps = new StepActivity.CalculateTotalSteps();
                 calculateTotalSteps.execute();
+                SharedPreferences sharedPreferences;
+                sharedPreferences = getActivity().getSharedPreferences("info", Context.MODE_PRIVATE);
+                String userId = sharedPreferences.getString("userId","0");
+
+                FinduserByIdAsyncTask finduserByIdAsyncTask = new FinduserByIdAsyncTask();
+                finduserByIdAsyncTask.execute(userId);
+
             }
         });
         updateButton.setOnClickListener(new View.OnClickListener() {
@@ -186,8 +202,6 @@ public class StepActivity extends Fragment implements View.OnClickListener {
             editor.putString("steps",details.toString());
             editor.apply();
 
-
-
         }
     }
 
@@ -211,11 +225,6 @@ public class StepActivity extends Fragment implements View.OnClickListener {
         protected void onPostExecute(String details) {
             textView_read.setTextColor(Color.rgb(0,0,0));
             textView_read.setText("All data: " + details);
-
-
-
-
-
         }
     }
 
@@ -223,13 +232,25 @@ public class StepActivity extends Fragment implements View.OnClickListener {
         @Override
         protected Void doInBackground(Void... params) {
             db.localDataDao().deleteAll();
+
+
+
             return null;
         }
         protected void onPostExecute(Void param) {
             textView_delete.setTextColor(Color.rgb(0,0,0));
             textView_delete.setText("All data was deleted");
+
         }
     }
+    public String generateId() {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = new Date();
+        String s = dateFormat.format(date);
+        String strippedInput = s.replaceAll("\\W", "");
+        return strippedInput;
+    }
+
 
     private class UpdateDatabase extends AsyncTask<Void, Void, String> {
         @Override protected String doInBackground(Void... params) {
@@ -249,6 +270,41 @@ public class StepActivity extends Fragment implements View.OnClickListener {
         @Override
         protected void onPostExecute(String details) {
             textView_update.setText("Updated details: "+ details);
+        }
+    }
+
+
+
+    private class FinduserByIdAsyncTask extends AsyncTask<String, Void, String>
+    {
+        @Override
+        protected String doInBackground (String...params){
+            String result=RestCustomer.findUserById(params[0]);
+            Gson g = new Gson();
+            UserInfo userInfo = g.fromJson(result, UserInfo.class);
+            Log.i("myTag",userInfo.getSurname());
+            SharedPreferences sharedPreferences;
+            sharedPreferences = getActivity().getSharedPreferences("info", Context.MODE_PRIVATE);
+            String steps = sharedPreferences.getString("steps","0");
+            String goal = sharedPreferences.getString("goal","0");
+            String burned = sharedPreferences.getString("burned","0");
+            String consumed = sharedPreferences.getString("consumed","0");
+            String reportId=generateId();
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date date = new Date();
+            String reportDate = dateFormat.format(date);
+            Log.i("myTag"," "+steps+" "+goal+" "+burned+" "+consumed+" "+reportDate);
+            Report report=new Report(reportId,reportDate,Integer.parseInt(consumed),Integer.parseInt(burned),Integer.parseInt(steps),Integer.parseInt(goal),userInfo);
+            RestReport.createCalorieReport(report);
+            return "successful";
+        };
+        @Override
+        protected void onPostExecute (String response){
+
+            Toast.makeText(getActivity(),
+                   response,
+                   Toast.LENGTH_SHORT).show();
+
         }
     }
 

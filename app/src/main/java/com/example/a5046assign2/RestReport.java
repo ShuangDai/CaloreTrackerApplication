@@ -1,5 +1,10 @@
 package com.example.a5046assign2;
 
+import android.util.Log;
+
+import com.google.gson.Gson;
+
+import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
@@ -55,5 +60,32 @@ public class RestReport {
             conn.disconnect();
         }
         return textResult;
+    }
+
+
+    public static void createCalorieReport(Report report){
+        URL url = null;
+        HttpURLConnection conn = null;
+        final String methodPath="calorie_tracker.report/";
+        try {
+            Gson gson =new Gson();
+            String stringCourseJson=gson.toJson(report);
+            url = new URL(BASE_URL + methodPath);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            conn.setFixedLengthStreamingMode(stringCourseJson.getBytes().length);
+            conn.setRequestProperty("Content-Type", "application/json");
+            PrintWriter out= new PrintWriter(conn.getOutputStream());
+            out.print(stringCourseJson);
+            out.close();
+            Log.i("error",new Integer(conn.getResponseCode()).toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conn.disconnect();
+        }
     }
 }

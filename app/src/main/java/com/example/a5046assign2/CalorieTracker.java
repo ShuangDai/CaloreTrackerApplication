@@ -31,6 +31,7 @@ public class CalorieTracker extends Fragment implements View.OnClickListener{
         goalTextView =(TextView)vDisplayCalorieTracker.findViewById(R.id.goalTextView);
         calorieConsumptedTextView = (TextView) vDisplayCalorieTracker.findViewById(R.id.calorieConsumedTextView);
         calorieBurnedTextView =(TextView) vDisplayCalorieTracker.findViewById(R.id.calorieBurnedTextView);
+
         SharedPreferences sharedPreferences;
         sharedPreferences = getActivity().getSharedPreferences("info", Context.MODE_PRIVATE);
         String steps = sharedPreferences.getString("steps","0");
@@ -70,6 +71,12 @@ public class CalorieTracker extends Fragment implements View.OnClickListener{
         @Override
         protected void onPostExecute(String response) {
             calorieBurnedTextView.setText("Calorie burned :"+response+" cal");
+            SharedPreferences sharedPreferences;
+            sharedPreferences = getActivity().getSharedPreferences("info", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            int b = (int)Double.parseDouble(response);
+            editor.putString("burned",Integer.toString(b));
+            editor.apply();
         }
     }
 
@@ -83,7 +90,14 @@ public class CalorieTracker extends Fragment implements View.OnClickListener{
         }
         @Override
         protected void onPostExecute(String response) {
-            calorieConsumptedTextView.setText("Calorie comsumpted: "+response+" cal");
+            calorieConsumptedTextView.setText("Calorie consumed: "+response+" cal");
+            SharedPreferences sharedPreferences;
+            sharedPreferences = getActivity().getSharedPreferences("info", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            int c = (int)Double.parseDouble(response);
+            editor.putString("consumed",Integer.toString(c));
+            editor.apply();
+
 
         }
     }

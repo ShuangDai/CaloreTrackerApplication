@@ -11,8 +11,8 @@ import java.util.Scanner;
 
 public class RestCustomer {
     private static final String BASE_URL ="http://10.0.0.86:8080/CalorieTrackerApplication/webresources/";
-    public static String findAllCustomers() {
-        final String methodPath = "calorie_tracker.userinfo/";
+    public static String findUserById(String id) {
+        final String methodPath = "calorie_tracker.userinfo/"+id;
         URL url = null;
         HttpURLConnection conn = null;
         String textResult = "";
