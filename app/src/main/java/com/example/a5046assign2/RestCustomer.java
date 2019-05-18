@@ -88,5 +88,29 @@ public class RestCustomer {
         }
         return textResult;
     }
+    public static String findByUserEmail(String email) {
+        final String methodPath = "calorie_tracker.userinfo/findByEmail/"+email;
+        URL url = null;
+        HttpURLConnection conn = null;
+        String textResult = "";
+        try {
+            url = new URL(BASE_URL + methodPath);
+            conn = (HttpURLConnection) url.openConnection();
+            conn.setReadTimeout(10000);
+            conn.setConnectTimeout(15000);
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Content-Type", "application/json");
+            conn.setRequestProperty("Accept", "application/json");
+            Scanner inStream = new Scanner(conn.getInputStream());
+            while (inStream.hasNextLine()) {
+                textResult += inStream.nextLine();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            conn.disconnect();
+        }
+        return textResult;
+    }
 
 }

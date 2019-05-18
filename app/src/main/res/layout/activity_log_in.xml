@@ -39,6 +39,12 @@
             android:inputType="textPassword"/>
     </android.support.design.widget.TextInputLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:id="@+id/errorMessageTextView"/>
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

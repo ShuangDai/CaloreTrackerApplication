@@ -3,6 +3,7 @@ package com.example.a5046assign2;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class LogIn extends AppCompatActivity {
     private Button btnLogIn;
     private String userName;
     private String password;
+    private TextView errorMessageTextview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +44,7 @@ public class LogIn extends AppCompatActivity {
         setContentView(R.layout.activity_log_in);
         userNameEditText = (EditText) findViewById(R.id.userNameEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
+        errorMessageTextview=(TextView) findViewById(R.id.errorMessageTextView);
         btnLogIn = (Button) findViewById(R.id.btnLogIn);
 
 
@@ -103,16 +106,21 @@ public class LogIn extends AppCompatActivity {
                     Toast.makeText(LogIn.this,
                             "Log in successfully",
                             Toast.LENGTH_SHORT).show();
+                    errorMessageTextview.setText("");
                 } else {
                     Toast.makeText(LogIn.this,
                             "The user name or password is not correct!",
                             Toast.LENGTH_SHORT).show();
+                    errorMessageTextview.setText("The user name or password is not correct!");
+                    errorMessageTextview.setTextColor(Color.parseColor("#FF0000"));
                 }
             }
             else{
                 Toast.makeText(LogIn.this,
                         "The user name or password is not correct!",
                         Toast.LENGTH_SHORT).show();
+                errorMessageTextview.setText("The user name or password is not correct!");
+                errorMessageTextview.setTextColor(Color.parseColor("#FF0000"));
 
             }
 
