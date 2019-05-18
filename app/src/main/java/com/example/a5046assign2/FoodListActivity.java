@@ -6,11 +6,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -43,7 +45,7 @@ public class FoodListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         String category = intent.getStringExtra("category");
 
-        Log.i("myLog",category);
+
         FoodCategoryAsyncTask getAllFood = new FoodCategoryAsyncTask();
         getAllFood.execute(category);
         addButton = this.findViewById(R.id.addButton);
@@ -63,6 +65,16 @@ public class FoodListActivity extends AppCompatActivity {
                 map.put("calorieAmount", foodsArray[1]);
                 map.put("fat", foodsArray[2]);
                 addMap(map);
+            }
+        });
+
+        foodList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view,
+                                    int position, long id) {
+                Toast.makeText(FoodListActivity.this, foodListArray.get(position).toString(), Toast.LENGTH_SHORT).show();
+                Log.i("myTag", foodListArray.get(position).toString());
             }
         });
 
@@ -93,11 +105,11 @@ public class FoodListActivity extends AppCompatActivity {
                     String fat = jsonArray.getJSONObject(i).getString("fat");
 
                     HashMap<String, String> map = new HashMap<String, String>();
-                    map.put("foodName", "foodName: "+foodName);
-                    map.put("calorieAmount", "calorieAmount:"+calorieAmount);
-                    map.put("fat","fat: "+fat);
+                    map.put("foodName", foodName);
+                    map.put("calorieAmount",calorieAmount);
+                    map.put("fat",fat);
                     foodListArray.add(map);
-                    Log.i("myTag",foodName);
+
 
                 }
 

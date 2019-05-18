@@ -18,6 +18,7 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.formatter.PercentFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,9 +28,6 @@ public class PiechartActivity extends AppCompatActivity {
 
     Button setDateBtn;
     TextView dateTextView;
-    int burned;
-    int consumpted;
-    int rest;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,25 +61,45 @@ public class PiechartActivity extends AppCompatActivity {
             Log.i("myLog",response);
             String[] array = response.split(" ");
             Log.i("myLog",array[0]);
-            consumpted =(int)Double.parseDouble(array[0]);
-            burned=(int)Double.parseDouble(array[1]);
-            rest=-(int)Double.parseDouble(array[2]);
+            float consumpted =Float.parseFloat(array[0]);
+            float burned=Float.parseFloat(array[1]);
+            float rest=-Float.parseFloat(array[2]);
+
             PieChart pieChart = findViewById(R.id.piechart);
             List<PieEntry> pieEntries = new ArrayList<>();
-            pieEntries.add(new PieEntry(burned, "Calorie burned"));
-            pieEntries.add(new PieEntry(consumpted, "Calorie consumpted"));
-            pieEntries.add(new PieEntry(rest, "Rest Calorie"));
+            float totoal = burned+rest+consumpted;
+
+            Log.i("myTag:burned",""+burned);
+            Log.i("myTag:consumed",""+consumpted);
+            Log.i("myTag:rest",""+rest);
+            Log.i("myTag:sum",""+totoal);
+
+            if(rest>0){
+                rest=0;
+            }
+            float burnedPercentage = (burned/totoal)*100;
+            float consumptedPercenatge =(consumpted/totoal)*100 ;
+            float restPercentage =(rest/totoal)*100;
+            Log.i("myTag", String.valueOf(burnedPercentage));
+
+            pieEntries.add(new PieEntry(burnedPercentage, "Calorie burned"));
+            pieEntries.add(new PieEntry(consumptedPercenatge, "Calorie consumpted"));
+            pieEntries.add(new PieEntry(restPercentage, "Rest Calorie"));
+
             final int[] MY_COLORS = {Color.rgb(255, 0, 0),Color.rgb(17, 4, 225), Color.rgb(0, 176, 80)};
             ArrayList<Integer> colors = new ArrayList<Integer>();
-
 
             PieDataSet pieDataSet = new PieDataSet(pieEntries, "Calorie distribution");
             PieData data = new PieData(pieDataSet);
             for(int c: MY_COLORS) colors.add(c);
 
+            data.setValueFormatter(new PercentFormatter());
+
             pieDataSet.setColors(colors);
+            pieDataSet.setValueTextSize(12);
 
             pieChart.setData(data);
+            pieChart.setUsePercentValues(true);
             pieChart.invalidate();
         }
     }
