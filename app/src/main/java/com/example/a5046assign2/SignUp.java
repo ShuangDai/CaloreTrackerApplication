@@ -157,11 +157,8 @@ public class SignUp extends AppCompatActivity {
         userName = userNameEditText.getText().toString();
         password = passwordEditText.getText().toString();
 
-        FindUserNamesAsyncTask findUserNamesAsyncTask = new FindUserNamesAsyncTask();
-        findUserNamesAsyncTask.execute(userName);
 
-        FindEmailAsyncTask findEmailAsyncTask = new FindEmailAsyncTask();
-        findEmailAsyncTask.execute(email);
+
 
         if(firstName.equals("")){
             firstNameErrorTextView.setText("First name is required");
@@ -183,6 +180,8 @@ public class SignUp extends AppCompatActivity {
             surNameErrorTextView.setTextColor(Color.parseColor("#FF0000"));
             return false;
         }
+        FindUserNamesAsyncTask findUserNamesAsyncTask = new FindUserNamesAsyncTask();
+        findUserNamesAsyncTask.execute(userName);
         if(email.equals("")){
             emailErrorTextView.setText("Email is required");
             emailErrorTextView.setTextColor(Color.parseColor("#FF0000"));
@@ -193,6 +192,9 @@ public class SignUp extends AppCompatActivity {
             emailErrorTextView.setTextColor(Color.parseColor("#FF0000"));
             return false;
         }
+        FindEmailAsyncTask findEmailAsyncTask = new FindEmailAsyncTask();
+        findEmailAsyncTask.execute(email);
+
         if(userName.equals("")){
             userNameErrorTextView.setText("User name is required");
             userNameErrorTextView.setTextColor(Color.parseColor("#FF0000"));

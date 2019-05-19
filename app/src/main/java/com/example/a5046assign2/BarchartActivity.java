@@ -35,6 +35,7 @@ public class BarchartActivity extends AppCompatActivity {
     Button endDateBtn;
     String startDate;
     String endDate;
+    Button generatePeriodReportBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +45,7 @@ public class BarchartActivity extends AppCompatActivity {
         endDateTextView =(TextView) findViewById(R.id.endDateTextview);
         startDateBtn=(Button) findViewById(R.id.setStartDate);
         endDateBtn =(Button) findViewById(R.id.setEndDate);
-
+        generatePeriodReportBtn = (Button) findViewById(R.id.generatePeriodReportBtn);
 
         startDateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,11 +60,12 @@ public class BarchartActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                if (monthOfYear + 1<0) {
-                                    startDateTextView.setText(dayOfMonth + "-" + "0" + (monthOfYear + 1) + "-" + year);
+                                if (monthOfYear + 1<10) {
+                                    startDateTextView.setText(year+"-"+ "0" + (monthOfYear + 1) + "-"+dayOfMonth);
+
                                 }
                                 else{
-                                    startDateTextView.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                    startDateTextView.setText(year+"-" + (monthOfYear + 1)+"-"+dayOfMonth);
                                 }
                             }
                         }, year, month, day);
@@ -84,29 +86,37 @@ public class BarchartActivity extends AppCompatActivity {
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                if (monthOfYear + 1<0){
-                                    endDateTextView.setText(dayOfMonth + "-" + "0"+(monthOfYear + 1) + "-" + year);
+                                if (monthOfYear + 1<10) {
+                                    endDateTextView.setText(year+"-"+ "0" + (monthOfYear + 1) + "-"+dayOfMonth);
+
                                 }
                                 else{
-                                    endDateTextView.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                    endDateTextView.setText(year+"-" + (monthOfYear + 1)+"-"+dayOfMonth);
                                 }
 
                             }
                         }, year, month, day);
                 picker2.show();
-                startDate= startDateTextView.getText().toString();
-                endDate = endDateTextView.getText().toString();
-                SharedPreferences sharedPreferences;
-                sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE);
-                String userId = sharedPreferences.getString("userId","0");
-
-                GetPeriodReportAsyncTask getPeriodReportAsyncTask = new GetPeriodReportAsyncTask();
-                getPeriodReportAsyncTask.execute(userId,"2019-03-20","2019-3-21");
             }
         });
 
 
-    }
+     generatePeriodReportBtn.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            startDate= startDateTextView.getText().toString();
+            endDate = endDateTextView.getText().toString();
+            SharedPreferences sharedPreferences;
+            sharedPreferences = getSharedPreferences("info", Context.MODE_PRIVATE);
+            String userId = sharedPreferences.getString("userId","0");
+
+            GetPeriodReportAsyncTask getPeriodReportAsyncTask = new GetPeriodReportAsyncTask();
+            getPeriodReportAsyncTask.execute(userId,startDate,endDate);
+        }
+    });
+}
+
+
     public void showDate(View v) {
         DialogFragment newFragment = new MyDatePickerFragment();
         newFragment.show(getFragmentManager(), "date picker");
@@ -124,62 +134,64 @@ public class BarchartActivity extends AppCompatActivity {
             List<String> dates = new ArrayList<String>();
             List<Integer> consumed = new ArrayList<Integer>();
             List<Integer> burned = new ArrayList<Integer>();
-
-            for(int i=0;i<(array.length);i+=3){
-                dates.add(array[i]);
-                consumed.add(Integer.parseInt(array[i+1]));
-                burned.add(Integer.parseInt(array[i+2]));
-                Log.i("myTag",array[i]);
-            }
-            Log.i("myTag",priodReport);
-
-            BarChart chart = findViewById(R.id.barchart);
-            List<BarEntry> entries = new ArrayList<>();
-            List<BarEntry> entries2 = new ArrayList<>();
-
-            int n=0;
-            for(Integer c:consumed) {
-                entries.add(new BarEntry(n, c));
-                n+=1;
-
-            }
-
-            int k=0;
-            for(Integer b:burned) {
-                entries2.add(new BarEntry(k, b));
-                k+=1;
-            }
-
-
-            IAxisValueFormatter formatter = new IAxisValueFormatter() {
-                @Override
-                public String getFormattedValue(float value, AxisBase axis) {
-                    return dates.get((int) value);
+            Log.i("myTag","period report"+priodReport);
+            if (array.length > 1) {
+                for (int i = 0; i < (array.length); i += 3) {
+                    dates.add(array[i]);
+                    consumed.add(Integer.parseInt(array[i + 1]));
+                    burned.add(Integer.parseInt(array[i + 2]));
+                    Log.i("myTag", array[i]);
                 }
-            };
+                Log.i("myTag", priodReport);
+
+                BarChart chart = findViewById(R.id.barchart);
+                List<BarEntry> entries = new ArrayList<>();
+                List<BarEntry> entries2 = new ArrayList<>();
+
+                int n = 0;
+                for (Integer c : consumed) {
+                    entries.add(new BarEntry(n, c));
+                    n += 1;
+
+                }
+
+                int k = 0;
+                for (Integer b : burned) {
+                    entries2.add(new BarEntry(k, b));
+                    k += 1;
+                }
 
 
-            XAxis xAxisFromChart = chart.getXAxis();
-            xAxisFromChart.setDrawAxisLine(true);
-            xAxisFromChart.setValueFormatter(formatter);
-            // minimum axis-step (interval) is 1,if no, the same value will be displayed multiple times
-            xAxisFromChart.setGranularity(1f);
-            xAxisFromChart.setPosition(XAxis.XAxisPosition.BOTTOM);
+                IAxisValueFormatter formatter = new IAxisValueFormatter() {
+                    @Override
+                    public String getFormattedValue(float value, AxisBase axis) {
+                        return dates.get((int) value);
+                    }
+                };
 
-            BarDataSet set = new BarDataSet(entries, "Calorie Burned");
-            BarDataSet set2 = new BarDataSet(entries2, "Calorie Consumpted");
 
-            set.setColor(Color.rgb(17, 4, 225));
-            set2.setColor(Color.rgb(0, 176, 80));
-            float groupSpace = 0.3f;
-            float barSpace = 0.02f;
-            float barWidth = 0.3f;
+                XAxis xAxisFromChart = chart.getXAxis();
+                xAxisFromChart.setDrawAxisLine(true);
+                xAxisFromChart.setValueFormatter(formatter);
+                // minimum axis-step (interval) is 1,if no, the same value will be displayed multiple times
+                xAxisFromChart.setGranularity(1f);
+                xAxisFromChart.setPosition(XAxis.XAxisPosition.BOTTOM);
 
-            BarData barData = new BarData(set,set2);
-            barData.setBarWidth(barWidth);
-            chart.setData(barData);
-            chart.groupBars(-0.3f, groupSpace, barSpace);
-            chart.invalidate(); // refresh
+                BarDataSet set = new BarDataSet(entries, "Calorie Burned");
+                BarDataSet set2 = new BarDataSet(entries2, "Calorie Consumpted");
+
+                set.setColor(Color.rgb(17, 4, 225));
+                set2.setColor(Color.rgb(0, 176, 80));
+                float groupSpace = 0.3f;
+                float barSpace = 0.02f;
+                float barWidth = 0.3f;
+
+                BarData barData = new BarData(set, set2);
+                barData.setBarWidth(barWidth);
+                chart.setData(barData);
+                chart.groupBars(-0.3f, groupSpace, barSpace);
+                chart.invalidate(); // refresh
+            }
         }
     }
 }

@@ -3,21 +3,37 @@
 xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
-android:orientation="vertical"
-tools:context=".PiechartActivity">
+android:orientation="vertical">
     <Button
         android:id="@+id/setDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Generate daily report"
+        android:text="Select date"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="20dp"
         />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
-        android:id="@+id/dateTextView"
+        android:id="@+id/dateSelectTextView"
+        />
+
+    <Button
+        android:id="@+id/generateReport"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate daily report"
+        android:layout_marginLeft="10dp"
+
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/errorTextView"
         />
 
     <com.github.mikephil.charting.charts.PieChart

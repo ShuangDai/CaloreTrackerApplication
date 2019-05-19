@@ -33,7 +33,13 @@ tools:context=".BarchartActivity">
         android:layout_marginLeft="10dp"
         android:id="@+id/endDateTextview"
         />
-
+    <Button
+        android:id="@+id/generatePeriodReportBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Generate period report"
+        android:layout_marginLeft="10dp"
+        />
     <com.github.mikephil.charting.charts.BarChart
         android:layout_marginTop="10dp"
         android:id="@+id/barchart"
